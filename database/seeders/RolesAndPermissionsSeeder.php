@@ -1,0 +1,92 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+class RolesAndPermissionsSeeder extends Seeder
+{
+    public function run()
+    {
+               
+        // Permissions
+        $permissions = [
+            // Products
+            'view products',
+            'create products',
+            'update products',
+            'delete products',
+
+            // Customers
+            'view users',
+            'create users',
+            'update users',
+            'delete users',
+
+            // Cart
+            'view cart',
+            'add to cart',
+            'update cart',
+            'remove from cart',
+
+            // Orders
+            'view orders',
+            'checkout order',
+            'cancel order',
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+
+        // Roles
+        $admin = Role::firstOrCreate(['name' => 'admin']);
+        $customer = Role::firstOrCreate(['name' => 'customer']);
+
+        // Admin gets ALL permissions
+        $admin->givePermissionTo([
+            'view products',
+            'create products',
+            'update products',
+            'delete products',
+
+            'view users',
+            'create users',
+            'update users',
+            'delete users',
+
+            'view cart',
+            'add to cart',
+            'update cart',
+            'remove from cart',
+
+            'view orders',
+            'checkout order',
+            'cancel order',
+        ]);
+
+        // Customer محدود
+        $customer->givePermissionTo([
+            'view products',
+
+            'view cart',
+            'add to cart',
+            'update cart',
+            'remove from cart',
+
+            'view orders',
+            'checkout order',
+            'cancel order',
+        ]);
+        $adminuser=User::firstOrCreate([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            "password"=>Hash::make("password123")
+        ]);
+        $adminuser->assignRole($admin);
+    }
+}
