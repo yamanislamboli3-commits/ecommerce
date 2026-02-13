@@ -13,7 +13,7 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run()
     {
                
-        // Permissions
+      
         $permissions = [
             // Products
             'view products',
@@ -43,11 +43,11 @@ class RolesAndPermissionsSeeder extends Seeder
             Permission::firstOrCreate(['name' => $permission]);
         }
 
-        // Roles
+       
         $admin = Role::firstOrCreate(['name' => 'admin']);
         $customer = Role::firstOrCreate(['name' => 'customer']);
 
-        // Admin gets ALL permissions
+       
         $admin->givePermissionTo([
             'view products',
             'create products',
@@ -69,7 +69,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'cancel order',
         ]);
 
-        // Customer محدود
+      
         $customer->givePermissionTo([
             'view products',
 

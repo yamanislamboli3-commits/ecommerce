@@ -11,18 +11,18 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use Illuminate\Container\Attributes\Auth;
 use App\Http\Controllers\AuthController;
-//user
+//Auth
 Route::post("register",[AuthController::class,"register"]);
 Route::post("login",[AuthController::class,"login"]);
 Route::post("logout",[AuthController::class,"logout"])->middleware("auth:sanctum");
-//customers routes
+//User
 Route::prefix("users")->middleware("auth:sanctum","role:admin")->group(function(){
 Route::apiResource('', UserController::class);
 Route::post('{user}/products',[UserController::class,'attach']);
 
 });
 
-//products routes
+//Product
 Route::prefix("products")->middleware("auth:sanctum","role:admin")->group(function(){
 Route::apiResource('products', ProductController::class);
 Route::post('products/{product}/users',[ProductController::class,'attach']);
