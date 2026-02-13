@@ -31,7 +31,7 @@ class CartController extends Controller
         ]);
        
 
-        $response = $this->cartService->addToCart($request->user(), $data, $request->product);
+        $response = $this->cartService->addToCart($request->user(), $data);
 
         return response()->json($response['data'], $response['status']);
     }
